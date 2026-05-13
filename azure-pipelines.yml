@@ -1,13 +1,12 @@
 trigger:
 - master
 
-pool:
-  vmImage: windows-latest
-
 stages:
 - stage: Build
   jobs:
   - job: BuildJob
+    pool:
+      vmImage: windows-latest
     steps:
     - task: Maven@3
       inputs:
@@ -28,7 +27,9 @@ stages:
     pool:
       vmImage: windows-latest
     steps:
-    - script: echo "Deploying application successfully!"
-      displayName: 'Deploy Stage'
-    - script: echo "Application is live!"
-      displayName: 'Verify Deployment'
+    - script: echo "Build artifact received"
+      displayName: 'Step 1 - Receive Artifact'
+    - script: echo "Deploying to Azure App Service..."
+      displayName: 'Step 2 - Deploy'
+    - script: echo "Deployment successful! App is live!"
+      displayName: 'Step 3 - Verify'
